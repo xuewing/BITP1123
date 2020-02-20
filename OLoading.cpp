@@ -81,7 +81,7 @@ void main()
 	cout << "\nMinah Total Payment per month : RM" << pay;
 	cout << endl;
 	
-	getchar();
+	system ("pause");
 
 
 }
