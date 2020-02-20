@@ -1,0 +1,48 @@
+//MyClass.h
+#ifndef MYCLASS_H
+#define MYCLASS_H
+
+class MyClass {
+private:
+	int x;
+public: 
+	MyClass();
+	MyClass(int n);
+	int getx();
+};
+#endif
+
+//MyClass.cpp
+#include <iostream>
+#include "MyClass.h"
+using namespace std;
+
+MyClass::MyClass() {
+	x = 0;
+}
+
+MyClass::MyClass(int n)
+{
+	x = n;
+}
+
+int MyClass::getx() {
+	return x;
+}
+
+//Utama.cpp
+#include <iostream>
+#include "MyClass.h"
+using namespace std;
+
+void main()
+{
+	MyClass k[3];
+	MyClass p[3] = { 20,30,40 };
+	int i;
+	for (i = 0; i < 3; i++) {
+		cout << "k[" << i << "]=" << k[i].getx() << "\t\t";
+		cout << "p[" << i << "]=" << p[i].getx() << endl;
+	}
+	getchar();
+}
