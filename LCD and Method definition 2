@@ -1,0 +1,131 @@
+//List.h
+//Declaration of class list
+
+#ifndef LIST_H
+#define LIST_H
+
+template <class DataType>
+class List
+{
+private:
+	class Node
+	{
+	public:
+		DataType data;
+		Node* link;
+	};
+	Node *pHead;
+	Node *pCurr;
+	int numItem;
+
+public:
+	List();
+	~List();
+	void AddToFront();
+	bool Tranverse(DataType, int&);
+	void printData();
+	int NumberOfItem();
+};
+
+#endif
+
+//Define the implementation of all methods in class list
+
+template <class DataType>
+List<DataType>::List()
+{
+	numItem = 0;
+	pHead = 0;
+}
+
+template <class DataType>
+List<DataType>::~List() {}
+template <class DataType>
+void List<DataType>::AddToFront()
+{
+	DataType item;
+	Node *pNew = new Node;
+	cout << "Enter data:";
+	cin >> item;
+	pNew->data = item;
+	pNew->link = pHead;
+	pHead = pNew;
+	numItem++;
+}
+
+template <class DataType>
+void List<DataType>::printData()
+{
+	pCurr = pHead;
+	while (pCurr != 0)
+	{
+		cout << pCurr->data << " ";
+		pCurr = pCurr->link;
+	}
+	cout << "\n";
+}
+
+template<class DataType>
+int List<DataType>::NumberOfItem()
+{
+	return numItem;
+}
+
+template<class DataType>
+bool List<DataType>::Tranverse(DataType target, int &loc)
+{
+	if (numItem == 0)
+		cout << "There is no item in the list" << endl;
+	else
+	{
+		pCurr = pHead;
+		loc = 0;
+		while (pCurr->data != target && pCurr->link != 0)
+		{
+			pCurr = pCurr->link;
+			loc++;
+		}
+		if (pCurr ->data == target)
+			return true;
+		else
+			return false;
+	}
+}
+
+
+//ListMain.cpp
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+using namespace std;
+#include "List.h"
+
+int main()
+{
+	int target;
+	int location;
+	List<int> x;
+	for (int i = 1; i < 4; i++)
+	{
+	x.AddToFront();
+	}
+	cout << "\nNumber of item now : " << x.NumberOfItem();
+	cout << "\nThe list are : " << endl;
+	x.printData();
+
+	cout << "\nEnter the search item: ";
+	cin >> target;
+
+
+	if (x.Tranverse(target, location) == true)
+	{
+		cout << "Item is found at location: "
+			<< location << endl;
+	}
+	else
+	{
+		cout << "Item is not found \n";
+	}
+
+}
