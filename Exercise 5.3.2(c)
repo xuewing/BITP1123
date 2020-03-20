@@ -1,0 +1,118 @@
+//List.h
+//Declaration of class List
+
+#ifndef LIST_H
+#define LIST_H
+
+const int maxSize = 100;
+
+class List
+{
+public:
+	List();
+	~List();
+
+	int numberOfItem();
+	void addItem(int item);
+	void printItem();
+	void findItem(int item, int position);
+
+private:
+	int size;
+	int array[maxSize];
+	int count;
+};
+#endif
+
+//List.cpp
+//Define the implementation of all methods in class List
+
+#include<iostream>
+using namespace std;
+#include "List.h"
+
+List::List()
+{
+	size = 0;
+}
+
+List::~List()
+{ }
+
+int List::numberOfItem()
+{
+	return size;
+}
+
+void List::addItem(int item)
+{
+	if (size == maxSize)
+	{
+		cout << "****There is no more place left****\n";
+		return;
+	}
+	array[size] = item;
+	size++;
+}
+
+void List::printItem()
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << array[i] << " " << "\n";
+	}
+}
+
+void List::findItem(int item, int position)
+{
+	cout << "Enter element to be found: ";
+	cin >> item;
+	for (int i = 0; i < 10; i++)
+	{
+		if (array[i] == item)
+		{
+			count = 1;
+			position = i+1 ;
+			break;
+		}
+	}
+	if (count == 0)
+	{
+		cout << "\nItem could not be found.\n";
+	}
+	else
+	{
+		cout << "\nElement " << item << " found at position " << position;
+	}
+}
+
+// ListMain.cpp
+//Implementation
+//Create object and method implementation
+
+#include<iostream>
+using namespace std;
+#include"List.h"
+
+int main()
+{
+	int item;
+	int position;
+
+	List ItemList;
+
+	cout << "Now there are: " << ItemList.numberOfItem() << " item in the list\n\n";
+	cout << "Enter a digit: ";
+	cin >> item;
+
+	for (int i = 0; i < 10; i++)
+	{
+		ItemList.addItem(item);
+		cout << "Item " << item++ << " is added. ";
+	}
+
+	cout << "\nNow there are : " << ItemList.numberOfItem() << " item in the list\n\n";
+	cout << "The list are: \n";
+	ItemList.printItem();
+	ItemList.findItem(item, position);
+}
