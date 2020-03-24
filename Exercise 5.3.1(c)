@@ -29,7 +29,7 @@ private:
 
 #include <iostream>
 using namespace std;
-#include"List.h"
+#include "List.h"
 
 List::List()
 {
@@ -52,22 +52,31 @@ void List::addItem(int item, int position)
 		return;
 	}
 
-	for (int i = size; i <= position - 1; i++)
+	if (position<0 || position>size)
 	{
-		array[i - 1] = array[i];
+		cout << "****Invalid position****\n";
+		return;
 	}
 
-	array[position+1] = item;
+
+	for (int i = size; i >= position; i--)
+	{
+		array[i] = array[i - 1];
+	}
+	array[position - 1] = item;
 	size++;
+
 }
 
 void List::printItem()
 {
-	for (int i = 0; i <= size; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		cout << array[i] << " ";
 	}
+
 }
+
 
 //ListMain.cpp
 //Implementation
