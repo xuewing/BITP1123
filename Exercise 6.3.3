@@ -1,0 +1,126 @@
+//List.h
+//Declaration of class List
+
+#ifndef LIST_H
+#define LIST_H
+
+template <class T>
+class List
+{
+private:
+	class Node
+	{
+	public:
+		T data;
+		Node* link;
+	};
+	Node* pHead;
+	Node* pCurr;
+	Node* pTemp;
+	Node* pBefore;
+	int numItem;
+public:
+	List();
+	~List();
+	void AddToFront();
+	void DeleteMiddle(T);
+	void printData();
+	int NumberOfItem();
+
+};
+#endif
+
+//Define the implementation of all methods in class List
+
+template <class T>
+List<T>::List()
+{
+	numItem = 0;
+	pHead = 0;
+}
+
+template<class T>
+List<T>::~List()
+{}
+
+template <class T>
+void List<T>::AddToFront()
+{
+	T item;
+	Node* pNew = new Node;
+	cout << "Enter data: ";
+	cin >> item;
+	pNew->data = item;
+	pNew->link = pHead;
+	pHead = pNew;
+	numItem++;
+}
+
+template<class T>
+void List<T>::DeleteMiddle(T target)
+{
+	pTemp = pHead;
+	while (pTemp != 0 && pTemp->data != target)
+	{
+		pBefore = pTemp;
+		pTemp = pTemp->link;
+	}
+	if (pTemp->data == target)
+	{
+		pBefore->link = pTemp->link;
+		delete pTemp;
+		numItem = numItem - 1;
+	}
+	else
+	{
+		cout << "Target not found!";
+	}
+}
+
+template<class T>
+void List<T>::printData()
+{
+	pCurr = pHead;
+	while (pCurr != 0)
+	{
+		cout << pCurr->data << " ";
+		pCurr = pCurr->link;
+	}
+	cout << "\n";
+}
+
+template <class T>
+int List<T>::NumberOfItem()
+{
+	return numItem;
+}
+
+// ListMain.cpp
+
+#include <iostream>
+using namespace std;
+#include "List.h"
+
+void main()
+{
+	char target;
+	List<char>x;
+
+	for (int i = 1; i < 4; i++)
+	{
+		x.AddToFront();
+	}
+
+	cout << "\nNumber of Item Now: " << x.NumberOfItem();
+	cout << "\nThe list are: " << endl;
+	x.printData();
+
+	cout << "\nDelete item: ";
+	cin >> target;
+
+	x.DeleteMiddle(target);
+	cout << "One item is deleted\n";
+	cout << "\nNumber of Item Now: " << x.NumberOfItem();
+	cout << "\nThe list are: " << endl;
+	x.printData();
+}
