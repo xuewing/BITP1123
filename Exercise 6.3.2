@@ -1,0 +1,158 @@
+//List.h
+//Declaration of class list
+
+#ifndef LIST_H
+#define LIST_H
+
+template <class T>
+class List
+{
+private:
+	class Node
+	{
+	public:
+		T data;
+		Node* link;
+	};
+
+	Node* pHead;
+	Node* pCurr;
+	Node* pTail;
+	int numItem;
+
+public:
+	List();
+	~List();
+	void AddInMiddle();
+	bool Traverse(T);
+	void AddAfter(T);
+	void printData();
+	int numberOfItem();
+
+};
+#endif;
+
+//Define the implementation of all methods in class List
+
+template <class T>
+List<T>::List() 
+{
+	numItem = 0;
+	pHead = 0;
+}
+
+template <class T>
+List<T>::~List() {}
+
+template <class T>
+void List<T>::AddInMiddle()
+{
+	T item;
+	Node* pNew = new Node;
+	cout << "Enter data: ";
+	cin >> item;
+	pNew->data = item;
+	pNew->link = NULL;
+	if (pHead == NULL)
+	{
+		pHead = pNew;
+		pTail = pNew;
+	}
+	else
+	{
+		pTail->link = pNew;
+		pTail = pTail->link;
+	}
+	numItem++;
+}
+
+template<class T>
+void List<T>::printData()
+{
+	pCurr = pHead;
+	while (pCurr != 0)
+	{
+		cout << pCurr->data << " ";
+		pCurr = pCurr->link;
+	}
+	cout << "\n";
+}
+
+template <class T>
+int List<T>::numberOfItem()
+{
+	return numItem;
+}
+
+template <class T>
+bool List<T>::Traverse(T target)
+{
+	if (numItem == 0)
+	{
+		cout << "****There is no item in the list****\n";
+	}
+	else
+	{
+		pCurr = pHead;
+		while (pCurr->data != target && pCurr->link != 0)
+		{
+			pCurr = pCurr->link;
+		}
+		if (pCurr->data == target)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+template <class T>
+void List<T>::AddAfter(T add)
+{
+	Node* pNew = new Node;
+	pNew->data = add;
+	pNew->link = pCurr->link;
+	pCurr->link = pNew;
+
+}
+
+//ListMain.cpp
+
+#include <iostream>
+#include <string>
+using namespace std;
+#include "List.h"
+
+int main()
+{
+	char target, add;
+	List<char>x;
+
+	for (int i = 1; i < 4; i++)
+	{
+		x.AddInMiddle();
+	}
+	cout << "\nNumber of Item Now: " << x.numberOfItem();
+	cout << "\nThe list are: " << endl;
+	x.printData();
+
+	cout << "\nAdd after item: ";
+	cin >> target;
+
+	if (x.Traverse(target) == true)
+	{
+		cout << "Enter data: ";
+		cin >> add;
+		x.AddAfter(add);
+		cout << "The new list are: " << endl;
+		x.printData();
+	}
+	else
+	{
+		cout << "Item is not found. Couldn't add Item to the list." << endl;
+	}
+	return 0;
+}
