@@ -1,0 +1,62 @@
+//Buih.h
+
+#ifndef BUIH_H
+#define BUIH_H
+
+const int size = 5;
+template <class T>
+class Buih
+{
+public:
+	T array[size];
+	void bubblesort(T[], int);
+};
+#endif
+
+template <class T>
+void Buih<T>::bubblesort(T list[], int last)
+{
+	int current, walker, temp;
+	bool sorted;
+
+	for (current = 0, sorted = false; current <= last & !sorted; current++)
+	{
+		for (walker = last, sorted = true; walker > current; walker--)
+		{
+			if (list[walker] < list[walker - 1])
+			{
+				sorted = false;
+				temp = list[walker];
+				list[walker] = list[walker - 1];
+				list[walker - 1] = temp;
+			}
+		}
+	}
+}
+// Utama.cpp
+
+#include <iostream>
+#include"Buih.h"
+using namespace std;
+
+int main()
+{
+	Buih<int> sort;
+	cout << "Input data: " << endl;
+	for (int i = 0; i <5; i++)
+	{
+		cout << "Data [" << i << "]: ";
+		cin >> sort.array[i];
+	}
+
+	cout << endl;
+	sort.bubblesort(sort.array, 4);
+
+	cout << "Data after sorted ascending: " << endl;
+	for (int j = 0; j < 5; j++)
+	{
+		cout << "Data [" << j << "]: ";
+		cout<<sort.array[j] << endl;
+	}
+	return 0;
+}
