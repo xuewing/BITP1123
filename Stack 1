@@ -1,0 +1,103 @@
+//Stack.h
+
+#ifndef STACK_H
+#define STACK_H
+
+const int maxSize = 10;
+
+template <class myData>
+class stack
+{
+public:
+	stack();
+	~stack();
+	void Push(myData);
+	void Pop();
+	myData TopStack();
+	bool Underflow();
+	bool Overflow();
+
+private:
+	int Top;
+	myData myArray[maxSize];
+};
+#endif
+
+template <class myData>
+stack <myData>::stack()
+{
+	Top = -1;
+}
+
+template <class myData>
+stack<myData>::~stack()
+{}
+
+template <class myData>
+void stack<myData>::Push(myData item)
+{
+	Top++;
+	myArray[Top] = item;
+}
+
+template <class myData>
+void stack<myData> ::Pop()
+{
+	Top--;
+}
+
+template <class myData>
+myData stack<myData>::TopStack()
+{
+	return myArray[Top];
+}
+
+template <class myData>
+bool stack<myData>::Underflow()
+{
+	return (Top == -1);
+}
+
+template <class myData>
+bool stack<myData>::Overflow()
+{
+	return (Top == maxSize - 1);
+}
+
+// Utama.cpp
+
+#include<iostream>
+using namespace std;
+#include "Stack.h"
+
+int main()
+{
+	stack<char> StackItem;
+	char item;
+	bool full = false;
+
+	do {
+		cout << "\nEnter data: ";
+		cin >> item;
+		if (!StackItem.Overflow()) {
+			cout << "Push item " << item << " now\n";
+			StackItem.Push(item);
+		}
+		else
+		{
+			cout << "\nStack is full: can't push item " << item << endl;
+			full = true;
+		}
+	} while (!full);
+	cout << "\nNow we will top and pop the stack \n";
+	while (!StackItem.Underflow()) {
+		cout << "\nTop is " << StackItem.TopStack() << " ";
+		cout << "Pop the stack now ";
+		StackItem.Pop();
+	}
+	if (StackItem.Underflow())
+	{
+		cout << "\nThe stack is empty, can't Top and Pop the stack\n ";
+	}
+	cout << endl;
+}
