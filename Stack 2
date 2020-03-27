@@ -1,0 +1,104 @@
+//Stack.h
+
+#ifndef STACK_H
+#define STACK_H
+
+template <class myData>
+struct Nod {
+	myData data;
+	Nod<myData>* next;
+};
+
+template <class myData>
+class StackLL
+{
+private:
+	int count;
+	Nod<myData>* top;
+public:
+	StackLL();
+	void Push(myData&);
+	void Pop();
+	bool Empty();
+	myData TopStack();
+};
+
+template<class myData>
+StackLL <myData>::StackLL() {
+	top = NULL;
+	count = 0;
+}
+
+template <class myData>
+bool StackLL <myData>::Empty()
+{
+	return (count == 0);
+}
+
+template <class myData>
+myData StackLL<myData>::TopStack()
+{
+	if (Empty())
+		return-1;
+	else
+		return top->data;
+}
+
+template<class myData>
+void StackLL <myData>::Push(myData& value)
+{
+	cout << "Push " << value << endl;
+	Nod <myData>* T = new Nod<myData>;
+	T->data = value;
+	T->next = top;
+	top = T;
+	count++;
+}
+
+template <class myData>
+void StackLL <myData>::Pop()
+{
+	if (!Empty())
+	{
+		cout << "Pop " << top->data << endl;
+		Nod<myData>* temp = top;
+		top = top->next;
+		delete temp;
+		--count;
+	}
+	else
+	{
+		cout << "\nStack is empty, can't Top and Pop the stack \n";
+	}
+}
+
+#endif
+// Utama.cpp
+
+#include <iostream>
+using namespace std;
+#include "Stack.h"
+
+int main()
+{
+	StackLL <char> myStack;
+	char i;
+	cout << "\nPlease insert a character,1 to Pop data or 0 to stop: ";
+	cin >> i;
+	while (i != '0')
+	{
+		if (i == '1')
+			myStack.Pop();
+		else
+			myStack.Push(i);
+
+		if (myStack.TopStack() != -1)
+		{
+			cout << "Top now is : " << myStack.TopStack();
+		}
+		cout << endl;
+		cout << "\nPlease insert a character, 1 to Pop data or 0 to stop: ";
+		cin >> i;
+	}
+	cout << endl;
+}
