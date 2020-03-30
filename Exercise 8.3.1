@@ -1,0 +1,104 @@
+//Stack.h
+
+#ifndef STACK_H
+#define STACK_H
+
+const int maxSize = 10;
+
+template <class myData>
+class stack
+{
+public:
+	stack();
+	~stack();
+	void Push(myData);
+	void Pop();
+	myData TopStack();
+	bool Underflow();
+	bool Overflow();
+
+private:
+	int Top;
+	myData myArray[maxSize];
+};
+#endif
+
+template <class myData>
+stack <myData>::stack()
+{
+	Top = -1;
+}
+
+template <class myData>
+stack<myData>::~stack()
+{}
+
+template <class myData>
+void stack<myData>::Push(myData item)
+{
+	Top++;
+	myArray[Top] = item;
+}
+
+template <class myData>
+void stack<myData> ::Pop()
+{
+	Top--;
+}
+
+template <class myData>
+myData stack<myData>::TopStack()
+{
+	return myArray[Top];
+}
+
+template <class myData>
+bool stack<myData>::Underflow()
+{
+	return (Top == -1);
+}
+
+template <class myData>
+bool stack<myData>::Overflow()
+{
+	return (Top == maxSize - 1);
+}
+//Main.cpp
+
+#include<iostream>
+using namespace std;
+#include"Stack.h"
+
+int main()
+{
+	stack<int> StackItem;
+	int item;
+	bool full = false;
+
+	do
+	{
+		cout << "\nEnter a number or 0 to stop:  ";
+		cin >> item;
+		if (item == 0)
+		{
+			break;
+		}
+		else if (!StackItem.Overflow())
+		{
+			StackItem.Push(item);
+		}
+		else 
+		{
+			full = true;
+		}
+	} while (item!=0);
+
+	cout << "\nThe data in reverse order: ";
+	while (!StackItem.Underflow())
+	{
+			cout << " " << StackItem.TopStack() << " ";
+			StackItem.Pop();
+	
+	};
+	return 0;
+}
