@@ -1,0 +1,99 @@
+//Stack.h
+
+#ifndef STACK_H
+#define STACK_H
+
+const int maxSize = 10;
+
+template <class myData>
+class Stack
+{
+public:
+	Stack();
+	~Stack();
+	void Push(myData);
+	void Pop();
+	myData TopStack();
+	bool Underflow();
+	bool Overflow();
+
+private:
+	int Top;
+	myData myArray[maxSize];
+};
+#endif
+
+template <class myData>
+Stack<myData>::Stack()
+{
+	Top = -1;
+}
+
+template <class myData>
+Stack<myData>::~Stack()
+{}
+
+template <class myData>
+void Stack<myData>::Push(myData item)
+{
+	Top++;
+	myArray[Top] = item;
+}
+
+template <class myData>
+void Stack<myData>::Pop()
+{
+	Top--;
+}
+
+template <class myData>
+myData Stack<myData>::TopStack()
+{
+	return myArray[Top];
+}
+
+template <class myData>
+bool Stack<myData>::Underflow()
+{
+	return(Top == -1);
+}
+
+template <class myData>
+bool Stack<myData>::Overflow()
+{
+	return(Top == maxSize - 1);
+}
+
+//Main.cpp
+
+#include<iostream>
+using namespace std;
+#include'Stack.h'
+
+int main()
+{
+	Stack<int> myStack();
+	int num;
+	cout << "Enter an integer: ";
+	cin >> num;
+	while (num > 0)
+	{
+		if (!myStack.Overflow())
+		{
+			myStack.Push(num % 10);
+			num = num / 10;
+		}
+		else {
+			cout << "\nStack Overflow - terminate process ";
+			return -1;
+		}
+	}
+	cout << "The equivalent decimal number is : ";
+	while (!myStack.Underflow())
+	{
+		num = num + myStack.TopStack() * pow(2, top);
+		myStack.Pop();
+	}
+	cout << "\n";
+	return 0;
+}
