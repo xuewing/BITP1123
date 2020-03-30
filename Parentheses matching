@@ -1,0 +1,99 @@
+//Stack.h
+
+#ifndef STACK_H
+#define STACK_H
+
+const int maxSize = 10;
+
+template <class myData>
+class Stack
+{
+public:
+	Stack();
+	~Stack();
+	void Push(myData);
+	void Pop();
+	myData TopStack();
+	bool Underflow();
+	bool Overflow();
+
+private:
+	int Top;
+	myData myArray[maxSize];
+};
+#endif
+
+template <class myData>
+Stack<myData>::Stack()
+{
+	Top = -1;
+}
+
+template <class myData>
+Stack<myData>::~Stack()
+{}
+
+template <class myData>
+void Stack<myData>::Push(myData item)
+{
+	Top++;
+	myArray[Top] = item;
+}
+
+template <class myData>
+void Stack<myData>::Pop()
+{
+	Top--;
+}
+
+template <class myData>
+myData Stack<myData>::TopStack()
+{
+	return myArray[Top];
+}
+
+template <class myData>
+bool Stack<myData>::Underflow()
+{
+	return(Top == -1);
+}
+
+template <class myData>
+bool Stack<myData>::Overflow()
+{
+	return(Top == maxSize - 1);
+}
+
+//Main.cpp
+
+#include<iostream>
+#include<string>
+using namespace std;
+#include"Stack.h" 
+
+int main()
+{
+	Stack<char> StackItem;
+	int index = 0;
+	char exp[50];
+	cout << "\nEnter an arithmetic expression: ";
+	cin.getline(exp, 50);
+	while (index < strlen(exp))
+	{
+		switch (exp[index])
+		{
+		case'(':StackItem.Push(exp[index]); break;
+		case')': if (!StackItem.Underflow())
+			StackItem.Pop();
+				 else
+		{
+			cout << "Error: missing parenthesis " << endl;
+			return 0;
+		}
+		} 
+		index++;
+	}
+	if (!StackItem.Underflow())
+		cout << "Error: missing parenthesis " << endl;
+	return 0;
+}
