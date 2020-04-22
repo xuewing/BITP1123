@@ -67,13 +67,16 @@ bool Stack<myData>::Overflow()
 //Main.cpp
 
 #include<iostream>
+#include "Stack.h"
 using namespace std;
-#include'Stack.h'
+
 
 int main()
 {
-	Stack<int> myStack();
-	int num;
+	Stack<int> myStack;
+	int num, i;
+	num = 0;
+
 	cout << "Enter an integer: ";
 	cin >> num;
 	while (num > 0)
@@ -91,9 +94,11 @@ int main()
 	cout << "The equivalent decimal number is : ";
 	while (!myStack.Underflow())
 	{
-		num = num + myStack.TopStack() * pow(2, top);
+		num = num + myStack.TopStack() * pow(2, i);
+		i++;
 		myStack.Pop();
 	}
+	cout << num;
 	cout << "\n";
 	return 0;
 }
