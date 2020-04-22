@@ -16,6 +16,7 @@ public:
 	myData TopStack();
 	bool Underflow();
 	bool Overflow();
+	int decimal();
 
 private:
 	int Top;
@@ -64,6 +65,12 @@ bool Stack<myData>::Overflow()
 	return(Top == maxSize - 1);
 }
 
+template <class myData>
+int Stack<myData>::decimal()
+{
+	return (Top);
+}
+
 //Main.cpp
 
 #include<iostream>
@@ -74,8 +81,7 @@ using namespace std;
 int main()
 {
 	Stack<int> myStack;
-	int num, i;
-	num = 0;
+	int num = 0;
 
 	cout << "Enter an integer: ";
 	cin >> num;
@@ -94,8 +100,8 @@ int main()
 	cout << "The equivalent decimal number is : ";
 	while (!myStack.Underflow())
 	{
-		num = num + myStack.TopStack() * pow(2, i);
-		i++;
+		num = num + myStack.TopStack() * pow(2, myStack.decimal());
+		
 		myStack.Pop();
 	}
 	cout << num;
