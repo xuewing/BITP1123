@@ -1,0 +1,122 @@
+//QueueLL.h
+#ifndef QUEUELL_H
+#define QUEUEll_H
+
+template<class myData>
+struct Nod
+{
+	myData data;
+	Nod <myData>* next;
+};
+
+template<class myData>
+class QueueLL
+{
+private:
+	Nod<myData>* front;
+	int qty;
+	Nod<myData>* rear;
+public:
+	QueueLL();
+	void Enqueue(myData);
+	void Dequeue();
+	myData queueFront();
+	myData queueRear();
+	bool Empty();
+};
+#endif
+
+template<class myData>
+QueueLL<myData>::QueueLL()
+{
+	front = NULL;
+	rear = NULL;
+	qty = 0;
+}
+
+template<class myData>
+void QueueLL<myData>::Enqueue(myData value)
+{
+	Nod<myData>* T = new Nod <myData>;
+	cout << "Enqueue " << value << " into the queue. ";
+	T->data = value;
+	T->next = NULL;
+
+	if (!Empty())
+		rear->next = T;
+	else
+		front = T;
+	qty++;
+	rear = T;
+}
+
+template<class myData>
+void QueueLL<myData>::Dequeue()
+{
+	if (qty == 0)
+		cout << "Underflow!!!";
+	else
+	{
+		cout << "\nDequeue: " << front->data;
+		Nod<myData>* temp = front;
+		if (qty == 1)
+			rear = front = NULL;
+		else
+			front = front->next;
+		qty--;
+		delete temp;
+	}
+}
+
+template <class myData>
+myData QueueLL<myData>::queueFront()
+{
+	if (Empty())
+		return false;
+	else
+		return front->data;
+}
+
+template <class myData>
+myData QueueLL <myData>::queueRear()
+{
+	if (Empty())
+		return false;
+	else
+		return rear->data;
+}
+
+template<class myData>
+bool QueueLL<myData>::Empty()
+{
+	return (qty == 0);
+}
+//Utama.cpp
+
+#include<iostream>
+using namespace std;
+#include "QueueLL.h"
+
+void main()
+{
+	QueueLL<char>MyQL;
+	char i;
+	cout << "\nPlease insert a data, 1 to Dequeue data or 0 to stop: ";
+	cin >> i;
+	while (i != '0')
+	{
+		if (i == '1')
+			MyQL.Dequeue();
+		else
+			MyQL.Enqueue(i);
+		if (!MyQL.Empty())
+		{
+			cout << "\nQueue front now is: " << MyQL.queueFront();
+			cout << "\nQueue rear now is: " << MyQL.queueRear();
+		}
+		cout << endl;
+		cout << "\nPlease insert a data, 1 to Dequeue data or 0 to stop: ";
+		cin >> i;
+	}
+	cout << endl;
+}
