@@ -1,0 +1,129 @@
+//Queue.h
+
+#ifndef QUEUE_H
+#define QUEUE_H
+
+const int size = 5;
+template<class myData>
+class Queue
+{
+private:
+	myData tata[size];
+	int bil;
+	int front;
+	int rear;
+
+public:
+	Queue();
+	void Enqueue(myData);
+	void Dequeue();
+	myData QueueFront();
+	myData QueueRear();
+	bool Empty();
+};
+#endif
+
+template <class myData>
+Queue<myData>::Queue()
+{
+	front = -1;
+	rear = -1;
+	bil = 0;
+}
+
+template<class myData>
+void Queue<myData>::Enqueue(myData value)
+{
+	if (bil < size)
+	{
+		cout << "\nInsert " << value << "into queue. ";
+		rear++;
+		if (rear == size)
+			rear = 0;
+		if (bil == 0)
+			front = 0;
+		tata[rear] = value;
+		bil++;
+	}
+	else
+	{
+		cout << "Overflow!!!";
+	}
+}
+
+template<class myData>
+void Queue<myData>::Dequeue()
+{
+	if (bil == 0)
+	{
+		cout << "Underflow!!!";
+	}
+	else
+	{
+		cout << "\nDequeue:" << tata[front];
+		front++;
+		if (front == size)
+			front = 0;
+		if (bil == 1)
+			rear = front = -1;
+		bil--;
+	}
+}
+
+template <class myData>
+bool Queue<myData>::Empty()
+{
+	return (bil == 0);
+}
+
+template<class myData>
+myData Queue<myData>::QueueFront()
+{
+	if (Empty())
+		return false;
+	else
+		return tata[front];
+}
+
+template <class myData>
+myData Queue<myData>::QueueRear()
+{
+	if (Empty())
+		return false;
+	else
+		return tata[rear];
+}
+
+//Utama.cpp
+
+#include <iostream>
+using namespace std;
+#include"Queue.h"
+
+int main()
+{
+	Queue<char> MyQ;
+	char i;
+	cout << "\nPlease insert a data, 1 to Dequeue data or 0 to stop: ";
+	cin >> i;
+	while (i != '0')
+	{
+		if (i == '1')
+		{
+			MyQ.Dequeue();
+		}
+		else
+		{
+			MyQ.Enqueue(i);
+		}
+		if (!MyQ.Empty())
+		{
+			cout << "\nQueue front now is: " << MyQ.QueueFront();
+			cout << "\nQueue rear now is: " << MyQ.QueueRear();
+		}
+		cout << endl;
+		cout << "\nPlease insert a data, 1 to Dequeue data or 0 to stop: ";
+		cin >> i;
+	}
+	cout << endl;
+}
