@@ -3,12 +3,12 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-const int size = 5;
+const int SIZE = 5;
 template<class myData>
 class Queue
 {
 private:
-	myData tata[size];
+	myData tata[SIZE];
 	int bil;
 	int front;
 	int rear;
@@ -34,11 +34,11 @@ Queue<myData>::Queue()
 template<class myData>
 void Queue<myData>::Enqueue(myData value)
 {
-	if (bil < size)
+	if (bil < SIZE)
 	{
-		cout << "\nInsert " << value << "into queue. ";
+		cout << "\nInsert " << value << " into queue. ";
 		rear++;
-		if (rear == size)
+		if (rear == SIZE)
 			rear = 0;
 		if (bil == 0)
 			front = 0;
@@ -62,7 +62,7 @@ void Queue<myData>::Dequeue()
 	{
 		cout << "\nDequeue:" << tata[front];
 		front++;
-		if (front == size)
+		if (front == SIZE)
 			front = 0;
 		if (bil == 1)
 			rear = front = -1;
