@@ -1,0 +1,104 @@
+//Queue.h
+#ifndef QUEUE_H
+#define QUEUE_H
+
+const int SIZE = 5;
+template <class myData>
+class Queue
+{
+private:
+	myData tata[SIZE];
+	int bil;
+	int front;
+	int rear;
+
+public:
+	Queue();
+	void Enqueue(myData);
+	void Dequeue();
+	bool Empty();
+};
+#endif
+
+template<class myData>
+Queue<myData>::Queue()
+{
+	front = -1;
+	rear = -1;
+	bil = 0;
+}
+
+template <class myData>
+void Queue<myData>::Enqueue(myData value)
+{
+	
+	if(bil<SIZE)
+	{
+		cout << "\nQueue Number: " << value;
+		rear++;
+		if (rear == SIZE)
+			rear = 0;
+		if (bil == 0)
+			front = 0;
+		tata[rear] = value;
+		bil++;
+	}
+	else
+		cout << "Overflow!!!";
+}
+
+template <class myData>
+void Queue<myData>::Dequeue()
+{
+	if (bil == 0)
+		cout << "\nQueue is empty";
+	else
+	{
+		cout << "\nCalling queue number: " << tata[front];
+		front++;
+		if (front == SIZE)
+			front = 0;
+		if (bil == 1)
+			rear = front = -1;
+		bil--;
+	}
+}
+
+template <class myData>
+bool Queue<myData>::Empty()
+{
+	return (bil == 0);
+}
+
+//Queue.cpp
+#include <iostream>
+#include<iomanip>
+using namespace std;
+#include"Queue.h"
+
+int main()
+{
+	Queue<int>MyQ;
+	int i;
+	int x = 1;
+	cout << setw(30) << "ZIMY BANK";
+	cout << "\n1: Get a queue number";
+	cout << "\n2: Next customer";
+	cout << "\n3: Exit";
+	cout << "\n>>";
+	cin >> i;
+	while (i != 3)
+	{
+		if (i == 1)
+			MyQ.Enqueue(x++);
+		if (i == 2)
+			MyQ.Dequeue();
+	cout << endl;
+	cout << "\n1: Get a queue number";
+	cout << "\n2: Next customer";
+	cout << "\n3: Exit";
+	cout << "\n>>";
+	cin >> i;
+}
+cout << endl;	
+}
