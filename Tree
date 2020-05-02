@@ -1,0 +1,219 @@
+//Tree.h
+
+#ifndef TREE_H
+#define TREE_H
+
+template <class T>
+class Tree
+{
+private:
+	class Node {
+	public:
+		T info;
+		Node* left;
+		Node* right;
+	};
+	Node* root;
+public:
+	Tree();
+	~Tree();
+	bool IsEmpty() const;
+	int NumberOfNodes()const;
+				int CountNodes(Node* root);
+	void InsertItem(T);
+				void Insert(Node*& root, T item);
+				void DeleteItem(T);
+				void Delete(Node*& root, T item);
+				void DeleteNode(Node*& root);
+	void RetrieveItem(T&, bool&);
+				void Retrieve(Node* root, T item, bool& found);
+				void GetPredecessor(Node*& root, T& data);
+	void PrintTree();
+				void Print(Node* root);
+};
+#endif
+
+template <class T>
+Tree<T>::Tree()
+{
+	root = NULL;
+}
+
+template <class T>
+Tree<T>::~Tree()
+{}
+
+template <class T>
+bool Tree <T>::IsEmpty()const
+{
+	if (root == NULL)
+		return true;
+	else
+		return false;
+}
+
+template <class T>
+int Tree<T>::NumberOfNodes()const
+{
+	return CountNodes(root);
+}
+
+template <class T>
+int Tree<T>::CountNodes(Node* root)
+{
+	if (root == NULL)
+		return 0;
+	else
+		return CountNodes(root->left) + CountNodes(root->right) + 1;
+}
+
+template <class T>
+void Tree<T>::InsertItem(T item)
+{
+	Insert(root, item);
+}
+
+template <class T>
+void Tree<T>::Insert(Node*& root, T item)
+{
+	if (root == NULL)
+	{
+		root = new Node;
+		root->right = NULL;
+		root->left = NULL;
+		root->info = item;
+	}
+	else if (item < root->info)
+		Insert(root->left, item);
+	else
+		Insert(root->right, item);
+}
+
+template <class T>
+void Tree<T>::DeleteItem(T item)
+{
+	Delete(root, item);
+}
+
+template <class T>
+void Tree<T>::Delete(Node*& root, T item)
+{
+	if (root == NULL)
+		return;
+	if (item < root->info)
+		Delete(root->left, item);
+	else if (item > root->info)
+		Delete(root->right, item);
+	else
+		DeleteNode(root);
+}
+
+template <class T>
+void Tree<T>::DeleteNode(Node*& root)
+{
+	T data;
+	Node* temPtr;
+	temPtr = root;
+	if (root->left == NULL && root->right == NULL)
+	{
+		root = NULL;
+		delete temPtr;
+	}
+	else if (root->left == NULL)
+	{
+		root = root->right;
+		delete temPtr;
+	}
+	else if (root->right == NULL)
+	{
+		root = root->left;
+		delete temPtr;
+	}
+	else
+	{
+		GetPredecessor(root->left, data);
+		root->info = data;
+		Delete(root->left, data);
+	}
+}
+
+template <class T>
+void Tree<T>::GetPredecessor(Node*& root, T& data)
+{
+	Node* Ptree = root;
+	while (Ptree->right != NULL)
+		Ptree = Ptree->right;
+	data = Ptree->info;
+}
+
+template <class T>
+void Tree<T>::PrintTree()
+{
+	Print(root);
+}
+
+template<class T>
+void Tree<T>::Print(Node* root)
+{
+	if (root != NULL)
+	{
+		Print(root->left);
+		cout << root->info << " ";
+		Print(root->right);
+	}
+}
+
+template <class T>
+void Tree<T>::RetrieveItem(T& item, bool& found)
+{
+	Retrieve(root, item, found);
+}
+
+template<class T>
+void Tree<T>::Retrieve(Node* root, T item, bool& found)
+{
+	if (root == NULL)
+		found = false;
+	else if (item < root->info)
+		Retrieve(root->left, item, found);
+	else if (item > root->info)
+		Retrieve(root->right, item, found);
+	else
+		found = true;
+}
+
+//Tree.cpp
+
+#include <iostream>
+using namespace std;
+#include"Tree.h"
+
+int main()
+{
+	Tree<int> BST;
+	int itemI, itemD, itemR;
+	bool found = true;
+	cout << "Input data or 0 to stop: " << endl;
+	cin >> itemI;
+
+	while (itemI != 0)
+	{
+		BST.InsertItem(itemI);
+		cin >> itemI;
+	}
+	cout << "Input data to be deleted: ";
+	cin >> itemD;
+	if (BST.IsEmpty())
+		cout << "Empty tree" << endl;
+	else
+		BST.DeleteItem(itemD);
+	cout << "\nInput data to be searched: ";
+	cin >> itemR;
+	BST.RetrieveItem(itemR, found);
+	if (found == true)
+		cout << "Data found!" << endl;
+	else
+		cout << "Data not found!" << endl;
+	cout << "Data in order" << endl;
+	BST.PrintTree();
+}
