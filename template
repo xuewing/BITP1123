@@ -1,0 +1,64 @@
+//Calculate.h
+
+#ifndef CALCULATE_H
+#define CALCULATE_H
+
+template <class T1, class T2>
+class Calculate
+{
+public:
+	Calculate();
+	~Calculate();
+	void displayForm(T1 num1, T1 num2, T2 op);
+};
+
+template <class T1, class T2>
+Calculate <T1, T2>::Calculate()
+{}
+
+template <class T1, class T2>
+Calculate <T1, T2>::~Calculate()
+{}
+
+template <class T1, class T2>
+void Calculate <T1, T2> ::displayForm(T1 num1, T1 num2, T2 op)
+{
+	switch (op)
+	{
+	case '+':
+		cout << num1 + num2 << endl;
+		break;
+	case '-':
+		cout << num1 - num2 << endl;
+		break;
+	case '*':
+		cout << num1 * num2 << endl;
+		break;
+	case '/':
+		cout << num1 / num2 << endl;
+		break;
+	}
+}
+#endif
+
+//Main method 
+
+#include <iostream>
+using namespace std;
+#include "Calculate.h"
+
+int main()
+{
+
+	Calculate <double, int> obj1;
+	cout << " 17.6 / 9 = ";
+	obj1.displayForm(17.6, 9, '/');
+	cout << " 17.6 + 9 = ";
+	obj1.displayForm(17.6, 9, '+');
+	cout << " 17.6 - 9 = ";
+	obj1.displayForm(17.6, 9, '-');
+	cout << " 17.6 * 9 = ";
+	obj1.displayForm(17.6, 9, '*');
+
+	return 0;
+}
