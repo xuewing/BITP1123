@@ -1,0 +1,135 @@
+//Queue.h
+#ifndef Queue_h
+#define Queue_h
+
+const int size = 16;
+template <class myData>
+class Queue
+{
+private:
+	myData array[16];
+	int count;
+	int front;
+	int rear;
+public:
+	Queue();
+	void Enqueue(char code);
+	void Dequeue();
+	myData queueFront();
+	myData queueRear();
+	bool Empty();
+	bool Full();
+};
+
+template <class myData>
+Queue<myData>::Queue()
+{
+	front = -1;
+	rear = -1;
+	count = 0;
+}
+
+template <class myData>
+void Queue <myData>::Enqueue(char code)
+{
+	if (!Empty()) {
+		if (!Full()) {
+			rear++;
+			array[rear] = code;
+			count++;
+		}
+		else
+			cout << "Overflow!!!";
+	}
+	else {
+		rear++;
+		front++;
+		array[rear] = code;
+		count++;
+	}
+}
+
+template <class myData>
+void Queue <myData>::Dequeue()
+{
+	if (!Empty()) {
+		if (front == 15) {
+			front = rear = -1;
+			count--;
+		}
+		else
+		{
+			front++;
+			count--;
+		}
+		}
+		else
+	{ 
+			cout << "Underflow!!!!!";
+	}
+}
+
+template <class myData>
+bool Queue <myData>::Empty()
+{
+	return (count == 0);
+}
+
+template <class myData>
+bool Queue <myData>::Full()
+{
+	return (rear == 15);
+}
+
+template <class myData>
+myData Queue <myData>::queueFront()
+{
+	if (Empty())
+		return false;
+	else
+		return array[front];
+}
+
+template <class myData>
+myData Queue <myData>::queueRear()
+{
+	if (Empty())
+		return false;
+	else
+		return array[rear];
+}
+
+#endif
+
+// Main.cpp
+
+#include <iostream>
+using namespace std;
+#include "Queue.h"
+
+int main()
+{
+	Queue <char> MyQ;
+	char code[16] = { 'H','T','S','L','W','F','Y','Z','Q','F','Y','N','T','S','X'};
+
+	for (int j = 0; j < 15; j++)
+	{
+		code[j] = code[j] - 5;
+	}
+
+	for (int i = 0; i < 15; i++)
+	{
+		MyQ.Enqueue(code[i]);
+	}
+
+	while (!MyQ.Empty())
+	{
+		for (int i = 0; i < 15; i++)
+		{
+			cout<< MyQ.queueFront();
+			MyQ.Dequeue();
+		}
+	}
+
+	return 0;
+}
